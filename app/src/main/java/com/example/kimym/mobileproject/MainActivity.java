@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void Search(View view) {
         String url = editText.getText().toString();
-
+//
 //        WebView webView = (WebView)findViewById(R.id.webView);
 //        webView.setWebViewClient(new WebViewClient());
 //        WebSettings settings = webView.getSettings();
