@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/text"
-        android:text="http://openapi.seoul.go.kr:8088/727a4e74456b696d36336278547079/xml/SearchPublicToiletPOIService/1/5/" />
+        android:text="http://openapi.seoul.go.kr:8088/727a4e74456b696d36336278547079/json/SearchPublicToiletPOIService/1/5/" />
 
     <Button
         android:layout_width="match_parent"

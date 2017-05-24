@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "673135937268-9urhiq8p0h7gco7kismfp7skrjm5vtgm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kimym.mobileproject",
+            "certificate_hash": "c37c3e1dde914e5b97f731cd790147dd215420de"
+          }
+        },
+        {
           "client_id": "673135937268-624b37jk0lhkbkpk3dupsduu0kujae94.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
