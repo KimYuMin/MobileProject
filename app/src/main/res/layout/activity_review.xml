@@ -141,6 +141,7 @@
                 android:textColor="#000000"
                 android:textSize="20dp"/>
             <EditText
+                android:id="@+id/edit_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -156,6 +157,7 @@
         android:orientation="vertical"
         android:layout_marginTop="15dp">
         <ListView
+            android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -172,7 +174,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="모든 후기 보기"
-            android:textColor="#eeeeee"/>
+            android:textColor="#222222"/>
     </LinearLayout>
 
 </LinearLayout>
