@@ -76,6 +76,15 @@
                 android:textColor="#000000"/>
         </LinearLayout>
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/review_map"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_height="150dp"
+        android:name="com.google.android.gms.maps.MapFragment">
+    </fragment>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,6 +98,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="후기를 남겨주세요"
+            android:textStyle="bold"
             android:textSize="20dp"
             android:textColor="#000000"/>
         <TextView
@@ -96,12 +106,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="예시 - 휴지가 없으니까 챙겨가세요! \n \t \t \t \t엄청깨끗해요 여기오세요^^"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:gravity="center"
             android:textColor="#000000"/>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="8dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/substract"
             android:scaleType="fitXY"/>
@@ -116,12 +126,12 @@
                 android:text="별점"
                 android:layout_gravity="center"
                 android:textColor="#000000"
-                android:textSize="20dp"/>
+                android:textSize="15dp"/>
             <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="18dp"
                 android:layout_height="32dp"
-                android:id="@+id/ratingbar_input"
+                android:id="@+id/input_ratingbar"
                 android:numStars="5"
                 android:stepSize="0.5"
                 android:rating="0.0"
@@ -139,42 +149,50 @@
                 android:text="후기 "
                 android:layout_gravity="center"
                 android:textColor="#000000"
-                android:textSize="20dp"/>
+                android:textSize="15dp"/>
             <EditText
-                android:id="@+id/edit_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:id="@+id/input_review_text"
                 android:hint="여기에 후기를 작성해주세요!"
                 android:textColorHint="#55000000"/>
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#17222222"
-        android:padding="12dp"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp">
-        <ListView
-            android:id="@+id/listview"
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:text="후기 등록"
+            android:background="#33222222"
+            android:id="@+id/submit_review_button"
+            />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="15dp">
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#17222222"-->
+    <!--android:padding="12dp"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_marginTop="15dp">-->
+    <!--<ListView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--</ListView>-->
+    <!--</LinearLayout>-->
+    <!---->
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_margin="10dp"
+            android:padding="5dp"
             android:text="모든 후기 보기"
-            android:textColor="#222222"/>
-    </LinearLayout>
+            android:textColor="#eeeeee"
+            android:background="#444444"
+            android:id="@+id/show_review_button"/>
+
 
 </LinearLayout>
