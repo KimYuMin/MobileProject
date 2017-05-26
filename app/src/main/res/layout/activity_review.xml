@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:text="하림빌딩"
                     android:id="@+id/text_title"
                     ></TextView>
@@ -44,7 +44,7 @@
                     android:id="@+id/text_address"
                     android:text="서울특별시 서초구 잠원동 8-24"
                     android:textColor="#000000"
-                    android:textSize="15dp"
+                    android:textSize="12dp"
                     ></TextView>
             </LinearLayout>
         </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:paddingTop="5dp">
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
-                android:textSize="20dp"
+                android:textSize="15dp"
                 android:text="8개의 후기"
                 android:textColor="#000000"/>
         </LinearLayout>
@@ -90,9 +90,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/review_linear"
         android:background="#17222222"
-        android:padding="12dp"
+        android:padding="9dp"
         android:orientation="vertical"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="9dp">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
             android:padding="5dp"
             android:text="모든 후기 보기"
             android:textColor="#eeeeee"
