@@ -8,6 +8,12 @@
     <!-- 위치정보활용시 추가 -->
     v
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <library android:name="com.google.android.maps"/>
+
 
     <application
         android:name=".ApplicationManager"
