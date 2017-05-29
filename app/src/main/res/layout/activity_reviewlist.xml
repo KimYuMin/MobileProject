@@ -8,13 +8,82 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:background="#f2f2f2"
+    android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kimym.mobileproject.ReviewlistActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginBottom="5dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#000000"
+                                    android:textSize="25dp"
+                                    android:text="하림빌딩"
+                                    android:id="@+id/text_title"
+                                    ></TextView>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/text_address"
+                                    android:text="서울특별시 서초구 잠원동 8-24"
+                                    android:textColor="#000000"
+                                    android:textSize="12dp"
+                                    ></TextView>
+                        </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:paddingTop="5dp">
+
+                        <RatingBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:id="@+id/ratingbar"
+                            android:numStars="5"
+                            android:stepSize="0.5"
+                            android:isIndicator="true"
+                            android:rating="3.5"
+                            style="@style/CustomRatingBar"/>
+
+                        <TextView
+                            android:id="@+id/text_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="8개의 후기"
+                            android:textColor="#000000"/>
+                </LinearLayout>
+        </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/listview">
+            android:id="@+id/listview"
+            android:divider="#f2f2f2">
         </ListView>
 
 </LinearLayout>

@@ -24,10 +24,8 @@ import java.util.List;
  */
 
 public class ReviewlistActivity extends AppCompatActivity {
-    ArrayList<UserReview> reviewArrayList;
     MyReviewListAdapter adapter;
     ListView listView;
-    DatabaseReference table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,28 +33,8 @@ public class ReviewlistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reviewlist);
 
         listView = (ListView)findViewById(R.id.listview);
-        reviewArrayList = new ArrayList<>();
-        adapter = new MyReviewListAdapter(this, R.layout.list_item, reviewArrayList);
+        adapter = new MyReviewListAdapter(this, R.layout.list_item, ReviewActivity.reviewArrayList);
         listView.setAdapter(adapter);
-
-        table = FirebaseDatabase.getInstance().getReference("ReviewDB/99997");
-        table.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                reviewArrayList.clear();
-                int i = 0;
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    Log.d("DATA : ", data.getValue().toString());
-                    Log.d("DATA : ", String.valueOf(i++));
-                    UserReview review = data.getValue(UserReview.class);
-                    reviewArrayList.add(review);
-                }
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        adapter.notifyDataSetChanged();
     }
 }

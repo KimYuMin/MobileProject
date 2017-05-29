@@ -13,14 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +34,7 @@ import java.util.Locale;
  */
 
 public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallback{
+    public static ArrayList<UserReview> reviewArrayList;
     EditText input_review;
     Button submit_review_button, show_review_button;
     RatingBar review_input_ratingBar, review_ratingbar;
@@ -40,14 +46,15 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
     FirebaseDatabase database;
     String toiletID, toiletName, toiletLat, toiletLng;
     TextView textTitle, textAddress, textCount;
-
+    DatabaseReference table2;
+    float average;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-        initMap();
         init();
         setData();
+        initMap();
     }
 
     public void initMap(){
@@ -61,7 +68,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
         toiletName = "동대문운동장공중화장실";
         toiletLng = "127.01210778871535";
         toiletLat = "37.56724821588269";
-
 
         database = FirebaseDatabase. getInstance ();
         table = database.getReference("ReviewDB");
@@ -88,10 +94,20 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 String review_text = input_review.getText().toString();
+                if(!review_text.equals("")){
+                    DatabaseReference addData = reviews.child(String.valueOf(reviewArrayList.size()));     // 3 -> 후기 개수로
+                    addData.child("reviewText").setValue(review_text);        // 내용
+                    addData.child("reviewStar").setValue(String.valueOf(review_starpoint));  // 별점
+
+                    input_review.setText("");
+                    review_input_ratingBar.setRating(0f);
+                    Toast.makeText(getApplicationContext(),"후기를 등록하였습니다.",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"후기를 입력해주세요",Toast.LENGTH_SHORT).show();
+                }
                 Log.d("RATING : ", String.valueOf(review_starpoint));
-                DatabaseReference addData = reviews.child("3");     // 3 -> 후기 개수로
-                addData.child("reviewText").setValue(review_text);        // 내용
-                addData.child("reviewStar").setValue(String.valueOf(review_starpoint));  // 별점
+
             }
         });
 
@@ -108,11 +124,37 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
     public void setData(){
         textTitle.setText(toiletName);
 
+        final int[] array_size = {0}; // 이게 array 개수
         double lat = Double.parseDouble(toiletLat);
         double lng = Double.parseDouble(toiletLng);
         getLocation(lat,lng);
 
+        reviewArrayList = new ArrayList<>();
+        average=0;
+        table2 = FirebaseDatabase.getInstance().getReference("ReviewDB/99997");
+        table2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                reviewArrayList.clear();
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    Log.d("DATA : ", data.getValue().toString());
+                    Log.d("DATA : ", String.valueOf(array_size[0]++));
+                    UserReview review = data.getValue(UserReview.class);
+                    reviewArrayList.add(review);
+                    average+=Float.parseFloat(review.getReviewStar());
+                }
+                //adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        textCount.setText(String.valueOf(reviewArrayList.size())+"개의 후기");
+
+        review_ratingbar.setRating((float)(average / reviewArrayList.size()));
         // 평균별점이랑 리뷰개수 set
+
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -125,6 +167,7 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
             //ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
         }
     }
+
     public void getLocation(double lat, double lng){
         String str = null;
         Geocoder geocoder = new Geocoder(this, Locale.KOREA);

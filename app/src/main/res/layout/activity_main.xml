@@ -11,6 +11,67 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kimym.mobileproject.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/wc"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WellCome"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="40sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/map_view_btn" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:weightSum="3"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:id="@+id/my_toilet_btn" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/direct_btn" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="구글맵이동"-->
+        <!--android:id="@+id/google_map_intent_button"/>-->
 
 
 </LinearLayout>

@@ -33,7 +33,8 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".IntroActivity" />
+        <activity android:name=".IntroActivity" >
+        </activity>
         <activity android:name=".ReviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
