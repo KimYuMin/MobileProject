@@ -144,15 +144,15 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
                     average+=Float.parseFloat(review.getReviewStar());
                 }
                 //adapter.notifyDataSetChanged();
+                textCount.setText(String.valueOf(reviewArrayList.size())+"개의 후기");
+                review_ratingbar.setRating((float)(average / reviewArrayList.size()));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
-        textCount.setText(String.valueOf(reviewArrayList.size())+"개의 후기");
 
-        review_ratingbar.setRating((float)(average / reviewArrayList.size()));
         // 평균별점이랑 리뷰개수 set
 
     }
