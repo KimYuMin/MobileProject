@@ -8,13 +8,29 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button gmap_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+    }
+
+    public void OnMapView(View view) {
+        Intent intent = new Intent(MainActivity.this, SearchingActivity.class);
+        intent.putExtra("DIRECT", false);
+        startActivity(intent);
+    }
+
+    public void onDirect(View view) {
+        Intent intent = new Intent(MainActivity.this, SearchingActivity.class);
+        intent.putExtra("DIRECT", true);
+        startActivity(intent);
+    }
+
+    public void myToilet(View view) {
+        Intent intent = new Intent(MainActivity.this, Map2Activity.class);
+        startActivity(intent);
     }
 }
 

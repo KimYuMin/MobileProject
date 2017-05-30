@@ -8,12 +8,12 @@
     <!-- 위치정보활용시 추가 -->
     v
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <library android:name="com.google.android.maps"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <library android:name="com.google.android.maps" />
 
     <application
         android:name=".ApplicationManager"
@@ -25,28 +25,23 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCh8a2FkSQaubRq5QGGMA8uKhv2F4nb4mw" />
 
         <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".IntroActivity" >
-        </activity>
-        <activity android:name=".ReviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapActivity">
-
-        </activity>
-        <activity android:name=".ReviewlistActivity"></activity>
-        <activity android:name=".ToiletDatabaseActivity"></activity>
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".ReviewlistActivity" />
+        <activity android:name=".ToiletDatabaseActivity" />
+        <activity android:name=".Map2Activity"></activity>
+        <activity android:name=".SearchingActivity"></activity>
     </application>
 
 </manifest>

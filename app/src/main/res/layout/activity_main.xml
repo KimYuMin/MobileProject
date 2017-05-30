@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/map_view_btn" />
+            android:onClick="OnMapView"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,13 +56,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:id="@+id/my_toilet_btn" />
+                android:onClick="myToilet" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/direct_btn" />
+                android:onClick="onDirect"/>
         </LinearLayout>
 
     </LinearLayout>
