@@ -1,17 +1,15 @@
 package com.example.kimym.mobileproject;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Address;
+import android.graphics.BitmapFactory;
 import android.location.Geocoder;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -25,15 +23,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 
-public class Map2Activity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMapClickListener {
+public class Map2Activity extends AppCompatActivity implements OnMapReadyCallback,
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnInfoWindowClickListener {
     static int REQ_PERMISSION = 1000;
     static int MY_LOCATION_REQUEST_CODE = 1000;
     MapFragment mapFr;
@@ -65,52 +62,7 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void init() {
-        place = (EditText)findViewById(R.id.place);
-        gc = new Geocoder(this, Locale.KOREAN);
-
         m_latlng = new ArrayList<>();
-        m_data = new ArrayList<>();
-        m_data.add("HYBRID");
-        m_data.add("NORMAL");
-        m_data.add("SATELLITE");
-        m_data.add("TERRAIN");
-        m_data.add("NONE");
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, m_data);
-
-        spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (map == null) {
-                    return;
-                } else {
-                    switch (position) {
-                        case 0:
-                            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                            break;
-                        case 1:
-                            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                            break;
-                        case 2:
-                            map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                            break;
-                        case 3:
-                            map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-                            break;
-                        case 4:
-                            map.setMapType(GoogleMap.MAP_TYPE_NONE);
-                            break;
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            }
-        });
     }
 
     public void initMap() {
@@ -137,36 +89,18 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void btnFind(View view) {
-        // GEOCoder이용해 주소에서 위치좌표 얻기
-        String p = place.getText().toString();
-        searchPlace(p);
-    }
 
-    void searchPlace(String place){
-        try {
-            List<Address> addr = gc.getFromLocationName(place, 5);
-            if(addr!=null){
-                latitude = addr.get(0).getLatitude();
-                longitude = addr.get(0).getLongitude();
-                placeName=addr.get(0).getFeatureName();
-                updateMap();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void updateMap(){
+    public void updateMap(double latitude,double longitude, String name, String id){
 
         final LatLng Loc = new LatLng(latitude,longitude);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(Loc, 16));
 
         MarkerOptions options = new MarkerOptions();
         options.position(Loc);
-        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); // BitmapDescriptorFactory.fromResource(R.drawable.station))
-        options.title(placeName); //info window의 타이틀
-        options.snippet(placeName); //info window의 설명
+        options.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.placemarker)));
+        options.title(name); //info window의 타이틀
+        options.snippet(id); //info window의 설명
         map.addMarker(options);
 
         Marker mk1 = map.addMarker(options);
@@ -191,33 +125,49 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
                     REQ_PERMISSION
             );
         }
-
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         // map ui setting 변경
         UiSettings uiSettings = map.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
 
-        latitude = 37.554752;
-        longitude = 126.970631;
-        placeName = "서울역";
-        updateMap();
 
+        ///////////////
+
+        for(int i=0;i< SearchingActivity.mapResults.size();i++){
+            updateMap(Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLat()) ,
+                    Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLng()),
+                    SearchingActivity.mapResults.get(i).getToiletName(),
+                    SearchingActivity.mapResults.get(i).getToiletID()
+                    );
+
+        }
         map.setOnMapClickListener(this);
-
+        map.setOnInfoWindowClickListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
         m_latlng.add(latLng);
         map.clear();
-        MarkerOptions options = new MarkerOptions();
-        options.position(latLng);
-        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); // BitmapDescriptorFactory.fromResource(R.drawable.station))
-        map.addMarker(options);
+    }
 
-        PolygonOptions options1 = new PolygonOptions();
-        options1.addAll(m_latlng);
-        options1.fillColor(Color.argb(100,200,121,70));
-        map.addPolygon(options1);
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        String name = marker.getTitle();
+        String id = marker.getSnippet();
+        String lat = String.valueOf(marker.getPosition().latitude);
+        String lng = String.valueOf(marker.getPosition().longitude);
+
+        Intent intent = new Intent(this, ReviewActivity.class);
+        intent.putExtra ("NAME", name);
+        intent.putExtra("ID", id);
+        intent.putExtra("LAT", lat);
+        intent.putExtra("LNG",lng);
+
+        startActivity(intent);
+
+
 
     }
 }

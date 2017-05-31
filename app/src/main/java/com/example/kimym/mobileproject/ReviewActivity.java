@@ -64,10 +64,18 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public void init(){
         //intent로 ID, 경도, 위도, 이름 받음
-        toiletID = "99997";
-        toiletName = "동대문운동장공중화장실";
-        toiletLng = "127.01210778871535";
-        toiletLat = "37.56724821588269";
+
+        Intent intent = getIntent();
+
+        toiletID = intent.getStringExtra("ID");
+        toiletName = intent.getStringExtra("NAME");
+        toiletLat = intent.getStringExtra("LAT");
+        toiletLng = intent.getStringExtra("LNG");
+
+//        toiletID = "99997";
+//        toiletName = "동대문운동장공중화장실";
+//        toiletLng = "127.01210778871535";
+//        toiletLat = "37.56724821588269";
 
         database = FirebaseDatabase. getInstance ();
         table = database.getReference("ReviewDB");
@@ -131,7 +139,7 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
         reviewArrayList = new ArrayList<>();
         average=0;
-        table2 = FirebaseDatabase.getInstance().getReference("ReviewDB/99997");
+        table2 = FirebaseDatabase.getInstance().getReference("ReviewDB/"+toiletID);
         table2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -141,7 +149,9 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
                     Log.d("DATA : ", String.valueOf(array_size[0]++));
                     UserReview review = data.getValue(UserReview.class);
                     reviewArrayList.add(review);
-                    average+=Float.parseFloat(review.getReviewStar());
+                    if(review.getReviewStar() != null){
+                        average+=Float.parseFloat(review.getReviewStar());
+                    }
                 }
                 //adapter.notifyDataSetChanged();
                 textCount.setText(String.valueOf(reviewArrayList.size())+"개의 후기");
