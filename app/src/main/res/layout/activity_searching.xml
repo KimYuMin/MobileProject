@@ -6,15 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/back2"
     tools:context="com.example.kimym.mobileproject.SearchingActivity">
 
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spin_kit"
-            style="@style/SpinKitView.FadingCircle"
+            style="@style/SpinKitView.Wave"
             android:layout_width="90sp"
             android:layout_height="90sp"
             android:layout_gravity="center"
-            app:SpinKit_Color="#000000" />
+            app:SpinKit_Color="#5487A4" />
+        <TextView
+            android:id="@+id/searchtext"
+            android:textSize="20dp"
+            android:text="화장실을 찾는 중입니다"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 </LinearLayout>

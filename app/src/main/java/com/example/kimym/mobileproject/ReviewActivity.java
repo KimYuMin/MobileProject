@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -155,6 +154,11 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ReviewActivity.this, ReviewlistActivity.class);
+                intent.putExtra("NAME", toiletName);
+                intent.putExtra("LAT", toiletLat);
+                intent.putExtra("LNG", toiletLng);
+                intent.putExtra("NUM", reviewArrayList.size());
+                intent.putExtra("STAR", (float)(average / reviewArrayList.size()));
                 startActivity(intent);
             }
         });
@@ -163,7 +167,7 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public void setData(){
         if(toiletName.length()>=10){
-            textTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25-toiletName.length()/5);
+            textTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25-toiletName.length()/2);
         }
         textTitle.setText(toiletName);
 
@@ -173,12 +177,13 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
         getLocation(lat,lng);
 
         reviewArrayList = new ArrayList<>();
-        average=0;
         table2 = FirebaseDatabase.getInstance().getReference("ReviewDB/"+toiletID);
         table2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 reviewArrayList.clear();
+                average=0;
+
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Log.d("DATA : ", data.getValue().toString());
                     Log.d("DATA : ", String.valueOf(array_size[0]++));
@@ -197,8 +202,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
             }
         });
-        // 평균별점이랑 리뷰개수 set
-
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -247,7 +250,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
         str = str.replaceFirst("대한민국","");
         textAddress.setText(str);
-
     }
 
     public void ClickLike(View view) {

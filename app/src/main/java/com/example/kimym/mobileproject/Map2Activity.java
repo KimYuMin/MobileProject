@@ -4,15 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,30 +20,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-
 
 public class Map2Activity extends AppCompatActivity implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        GoogleMap.OnMapClickListener,
         GoogleMap.OnInfoWindowClickListener {
     static int REQ_PERMISSION = 1000;
     static int MY_LOCATION_REQUEST_CODE = 1000;
     MapFragment mapFr;
     GoogleMap map;
-
-    ArrayList<String> m_data;
-    ArrayAdapter adapter;
-    Spinner spinner;
-
-    EditText place;
-    Geocoder gc;
-
-    double latitude;
-    double longitude;
-    String placeName;
-
-    ArrayList<LatLng> m_latlng;
 
     public boolean checkPermission(){
         return ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -58,11 +38,6 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
         initMap();
-        init();
-    }
-
-    public void init() {
-        m_latlng = new ArrayList<>();
     }
 
     public void initMap() {
@@ -131,23 +106,15 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
         uiSettings.setZoomControlsEnabled(true);
 
 
-        ///////////////
+
         for(int i=0;i< SearchingActivity.mapResults.size();i++){
             updateMap(Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLat()) ,
                     Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLng()),
                     SearchingActivity.mapResults.get(i).getToiletName(),
                     SearchingActivity.mapResults.get(i).getToiletID()
                     );
-
         }
-        map.setOnMapClickListener(this);
         map.setOnInfoWindowClickListener(this);
-    }
-
-    @Override
-    public void onMapClick(LatLng latLng) {
-        m_latlng.add(latLng);
-        map.clear();
     }
 
 
@@ -165,8 +132,5 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
         intent.putExtra("LNG",lng);
 
         startActivity(intent);
-
-
-
     }
 }
