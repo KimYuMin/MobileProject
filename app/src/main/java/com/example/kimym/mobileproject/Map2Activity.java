@@ -132,7 +132,6 @@ public class Map2Activity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         ///////////////
-
         for(int i=0;i< SearchingActivity.mapResults.size();i++){
             updateMap(Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLat()) ,
                     Double.parseDouble(SearchingActivity.mapResults.get(i).getToiletLng()),

@@ -6,7 +6,6 @@
     <!-- 위치정보활용시 추가 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 위치정보활용시 추가 -->
-    v
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -29,19 +28,21 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCh8a2FkSQaubRq5QGGMA8uKhv2F4nb4mw" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".IntroActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".ReviewActivity"></activity>
+        <activity android:name=".ReviewActivity" />
         <activity android:name=".ReviewlistActivity" />
         <activity android:name=".ToiletDatabaseActivity" />
         <activity android:name=".Map2Activity"></activity>
-        <activity android:name=".SearchingActivity"></activity>
+        <activity android:name=".SearchingActivity" />
+        <activity android:name=".MobileMapActivity">
+        </activity>
     </application>
 
 </manifest>

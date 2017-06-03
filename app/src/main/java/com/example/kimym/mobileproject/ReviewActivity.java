@@ -2,22 +2,33 @@ package com.example.kimym.mobileproject;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,10 +59,17 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
     TextView textTitle, textAddress, textCount;
     DatabaseReference table2;
     float average;
+    boolean check_like;
+    MyDBHandler dbHandler;
+    String query;
+    Cursor cursor;
+    ImageButton likebtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+        check_like = false;
         init();
         setData();
         initMap();
@@ -64,7 +82,7 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public void init(){
         //intent로 ID, 경도, 위도, 이름 받음
-
+        likebtn = (ImageButton)findViewById(R.id.likebtn);
         Intent intent = getIntent();
 
         toiletID = intent.getStringExtra("ID");
@@ -72,10 +90,24 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
         toiletLat = intent.getStringExtra("LAT");
         toiletLng = intent.getStringExtra("LNG");
 
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        query = "select * from MY_LOCATION";
+        SQLiteDatabase db = dbHandler.getWritableDatabase();
+        cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        for(int i = 0; i < cursor.getCount(); i++) {
+            if(toiletID.equals(cursor.getString(1))){
+                check_like = true;
+                likebtn.setBackgroundResource(R.drawable.like);
+                break;
+            }
+            cursor.moveToNext();
+        }
 //        toiletID = "99997";
 //        toiletName = "동대문운동장공중화장실";
 //        toiletLng = "127.01210778871535";
 //        toiletLat = "37.56724821588269";
+
 
         database = FirebaseDatabase. getInstance ();
         table = database.getReference("ReviewDB");
@@ -130,6 +162,9 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void setData(){
+        if(toiletName.length()>=10){
+            textTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25-toiletName.length()/5);
+        }
         textTitle.setText(toiletName);
 
         final int[] array_size = {0}; // 이게 array 개수
@@ -162,7 +197,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
             }
         });
-
         // 평균별점이랑 리뷰개수 set
 
     }
@@ -172,10 +206,26 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED){
             map.setMyLocationEnabled(true);
+            updateMap();
         }
         else{
             //ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
         }
+    }
+
+    public void updateMap(  ){
+        final LatLng Loc = new LatLng(Double.parseDouble(toiletLat),Double.parseDouble(toiletLng));
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(Loc, 16));
+
+        MarkerOptions options = new MarkerOptions();
+        options.position(Loc);
+        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)); // BitmapDescriptorFactory.fromResource(R.drawable.station))
+        options.title(toiletName);  //info window의 타이틀
+        map.addMarker(options);
+
+        Marker mk1 = map.addMarker(options);
+        mk1.setIcon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.placemarker)));
+        mk1.showInfoWindow();
     }
 
     public void getLocation(double lat, double lng){
@@ -197,6 +247,30 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
 
         str = str.replaceFirst("대한민국","");
         textAddress.setText(str);
+
+    }
+
+    public void ClickLike(View view) {
+//        toiletID = intent.getStringExtra("ID");
+//        toiletName = intent.getStringExtra("NAME");
+//        toiletLat = intent.getStringExtra("LAT");
+//        toiletLng = intent.getStringExtra("LNG");
+        if(check_like == true){ // 현재 즐찾추가일때 다시누르면 지워야함
+            boolean result = dbHandler.deleteLocation(toiletID);
+            if(result){
+                likebtn.setBackgroundResource(R.drawable.like_off);
+                Toast.makeText(this, "즐겨찾기 해제", Toast.LENGTH_SHORT).show();
+                check_like = false;
+            }
+        }
+        else{ // 즐찾아니면 디비에넣고
+            likebtn.setBackgroundResource(R.drawable.like);
+            boolean result = dbHandler.table_addData(toiletName, toiletID, Double.parseDouble(toiletLat), Double.parseDouble(toiletLng));
+            if(result == true) {
+                Toast.makeText(this, "즐겨찾기 등록", Toast.LENGTH_SHORT).show();
+            }
+            check_like = true;
+        }
 
     }
 }
