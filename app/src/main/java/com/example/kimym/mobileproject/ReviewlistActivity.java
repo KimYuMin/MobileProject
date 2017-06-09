@@ -12,8 +12,6 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -30,8 +28,6 @@ public class ReviewlistActivity extends AppCompatActivity {
     String toiletID, toiletName, toiletLat, toiletLng;
     TextView textTitle, textAddress, textCount;
     RatingBar review_ratingbar;
-    float average= 0f;
-    DatabaseReference table2;
     int num;
     float rating;
     TextView noReview;

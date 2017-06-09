@@ -95,18 +95,13 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
         cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
         for(int i = 0; i < cursor.getCount(); i++) {
-            if(toiletID.equals(cursor.getString(1))){
+            if (toiletID.equals(cursor.getString(1))) {
                 check_like = true;
                 likebtn.setBackgroundResource(R.drawable.like);
                 break;
             }
             cursor.moveToNext();
         }
-//        toiletID = "99997";
-//        toiletName = "동대문운동장공중화장실";
-//        toiletLng = "127.01210778871535";
-//        toiletLat = "37.56724821588269";
-
 
         database = FirebaseDatabase. getInstance ();
         table = database.getReference("ReviewDB");
@@ -145,7 +140,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
                 else{
                     Toast.makeText(getApplicationContext(),"후기를 입력해주세요",Toast.LENGTH_SHORT).show();
                 }
-                Log.d("RATING : ", String.valueOf(review_starpoint));
 
             }
         });
@@ -193,13 +187,11 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
                         average+=Float.parseFloat(review.getReviewStar());
                     }
                 }
-                //adapter.notifyDataSetChanged();
                 textCount.setText(String.valueOf(reviewArrayList.size())+"개의 후기");
                 review_ratingbar.setRating((float)(average / reviewArrayList.size()));
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -211,12 +203,9 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
             map.setMyLocationEnabled(true);
             updateMap();
         }
-        else{
-            //ActivityCompat.requestPermissions(this, new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION}, REQ_PERMISSION);
-        }
     }
 
-    public void updateMap(  ){
+    public void updateMap(){
         final LatLng Loc = new LatLng(Double.parseDouble(toiletLat),Double.parseDouble(toiletLng));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(Loc, 16));
 
@@ -253,10 +242,6 @@ public class ReviewActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void ClickLike(View view) {
-//        toiletID = intent.getStringExtra("ID");
-//        toiletName = intent.getStringExtra("NAME");
-//        toiletLat = intent.getStringExtra("LAT");
-//        toiletLng = intent.getStringExtra("LNG");
         if(check_like == true){ // 현재 즐찾추가일때 다시누르면 지워야함
             boolean result = dbHandler.deleteLocation(toiletID);
             if(result){

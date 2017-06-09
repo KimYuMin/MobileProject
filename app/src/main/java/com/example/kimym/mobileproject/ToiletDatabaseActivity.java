@@ -39,13 +39,12 @@ public class ToiletDatabaseActivity extends AppCompatActivity {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String result) {
-                        //parsingHTML(result);
                         parsingJSON(result);
                     }
                 });
     }
     public void parsingJSON(String result){
-        String total = "";
+//        String total = "";
         try {
             JSONObject json = new JSONObject(result);
             JSONObject object = json.getJSONObject("SearchPublicToiletPOIService");
@@ -66,14 +65,15 @@ public class ToiletDatabaseActivity extends AppCompatActivity {
                 // firebase에 데이터 넣는 부분, 한 번만 해야 함
                 // 0525. 01:12 1~100까지 넣음
                 // 총 4938개 있음
-//                DatabaseReference toilet = table.child(POI_ID);
-//                toilet.child("toiletName").setValue(FNAME);   // 이름
-//                toilet.child("toiletLng").setValue(X_WGS84);    // 경도
-//                toilet.child("toiletLat").setValue(Y_WGS84);    // 위도
+                // DatabaseReference toilet = table.child(POI_ID);
+                // toilet.child("toiletName").setValue(FNAME);   // 이름
+                // toilet.child("toiletLng").setValue(X_WGS84);    // 경도
+                // toilet.child("toiletLat").setValue(Y_WGS84);    // 위도
 
-//                total += FNAME + "\t" + X_WGS84 + "\t" + Y_WGS84 + "\n";
+                // 파싱할 때 쓴 코드
+                // total += FNAME + "\t" + X_WGS84 + "\t" + Y_WGS84 + "\n";
             }
-//            textView.setText(total);
+                // textView.setText(total);
         } catch (JSONException e) {
             e.printStackTrace();
         }

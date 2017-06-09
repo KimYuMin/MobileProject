@@ -41,7 +41,6 @@
         <activity android:name=".ToiletDatabaseActivity" />
         <activity android:name=".Map2Activity" />
         <activity android:name=".SearchingActivity" />
-        <activity android:name=".MobileMapActivity"></activity>
         <activity android:name=".LikelistActivity"></activity>
     </application>
 

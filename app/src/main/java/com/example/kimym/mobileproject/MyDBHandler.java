@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by kimym on 2017-05-31.
@@ -25,10 +24,10 @@ public class MyDBHandler extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "create table if not exists MY_LOCATION ("
-                +"LOCATION_NAME NVARCHAR(15) NOT NULL, " // 장소이름
-                +"LOCATION_ID NCHAR(8) NOT NULL, "     // 장소ID
-                +"LOCATION_LAT DOUBLE NOT NULL, "  // 장소 LAT
-                +"LOCATION_LNG DOUBLE NOT NULL, " // 장소 LNG
+                +"LOCATION_NAME NVARCHAR(15) NOT NULL, "    // 장소이름
+                +"LOCATION_ID NCHAR(8) NOT NULL, "          // 장소ID
+                +"LOCATION_LAT DOUBLE NOT NULL, "           // 장소 LAT
+                +"LOCATION_LNG DOUBLE NOT NULL, "           // 장소 LNG
                 +"primary key(LOCATION_ID)) ";
 
         db.execSQL(CREATE_TABLE);
@@ -40,8 +39,6 @@ public class MyDBHandler extends SQLiteOpenHelper{
         values.put(COLUMN_LOCATION_ID, id);
         values.put(COLUMN_LOCATION_LAT, lat);
         values.put(COLUMN_LOCATION_LNG, lng);
-        Log.d("ADD : " , name);
-        Log.d("ADD YMD : " , id);
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_NAME, null, values);
         db.close();

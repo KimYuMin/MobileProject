@@ -96,7 +96,7 @@ public class MyLikeListAdapter extends ArrayAdapter<ToiletData> {
                 }
             }
         } catch (IOException e) {
-            Log.e("MainActivity", "주소를 찾지 못하였습니다.");
+            Log.e("error", "주소를 찾지 못함");
             e.printStackTrace();
         }
         return str;
